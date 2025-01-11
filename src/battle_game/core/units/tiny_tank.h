@@ -13,7 +13,6 @@ class Tank : public Unit {
   void TankMove(float move_speed, float rotate_angular_speed);
   void TurretRotate();
   void Fire();
-  void Mine();
   [[nodiscard]] const char *UnitName() const override;
   [[nodiscard]] const char *Author() const override;
 

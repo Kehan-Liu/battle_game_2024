@@ -33,16 +33,18 @@ Mine::Mine(GameCore *core,
         auto sin_theta = std::sin(theta);
         auto cos_theta = std::cos(theta);
         mine_vertices.push_back({{sin_theta * 0.5f, cos_theta * 0.5f},
-                                   {0.0f, 0.0f},
-                                   {1.0f, 1.0f, 1.0f, 1.0f}});
+                   {0.0f, 0.0f},
+                   {0.0f, 0.3f, 0.0f, 0.8f}});
         mine_indices.push_back(i);
         mine_indices.push_back((i + 1) % precision);
         mine_indices.push_back(precision);
       }
+      mine_vertices.push_back(
+          {{0.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 0.5f, 0.0f, 0.8f}});
       mine_model_index = mgr->RegisterModel(mine_vertices, mine_indices);
-    }
+        }
 
-    {
+        {
       /*Mine Light*/
       std::vector<ObjectVertex> light_vertices;
       std::vector<uint32_t> light_indices;
@@ -53,13 +55,15 @@ Mine::Mine(GameCore *core,
         theta *= glm::pi<float>() * 2.0f;
         auto sin_theta = std::sin(theta);
         auto cos_theta = std::cos(theta);
-        light_vertices.push_back({{sin_theta * 0.2f, cos_theta * 0.2f},
+        light_vertices.push_back({{sin_theta * 0.15f, cos_theta * 0.15f},
                                   {0.0f, 0.0f},
                                   {1.0f, 0.0f, 0.0f, 1.0f}});
         light_indices.push_back(i);
         light_indices.push_back((i + 1) % light_precision);
         light_indices.push_back(light_precision);
       }
+      light_vertices.push_back(
+          {{0.0f, 0.0f}, {0.0f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f}});
       mine_light_index = mgr->RegisterModel(light_vertices, light_indices);
     }
   }
@@ -101,8 +105,8 @@ void Mine::Update() {
 Mine::~Mine() {
   for (int i = 0; i < 5; i++) {
     game_core_->PushEventGenerateParticle<particle::Smoke>(
-        position_, 0.0F, game_core_->RandomInCircle() * 2.0f, 0.2f,
-        glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}, 5.0f);
+        position_, 0.0F, game_core_->RandomInCircle() * 2.0f, 0.5f,
+        glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}, 30.0f);
   }
 }
 

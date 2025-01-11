@@ -13,11 +13,13 @@ class LKHTank : public Unit {
   void TankMove();
   void TurretRotate(float rotate_angular_speed);
   void Fire();
+  void Mine();
   [[nodiscard]] const char *UnitName() const override;
   [[nodiscard]] const char *Author() const override;
 
   float turret_rotation_{0.0f};
   uint32_t fire_count_down_{0};
   uint32_t move_count_down_{0};
+  uint32_t mine_count_down_{0};
 };
 }
